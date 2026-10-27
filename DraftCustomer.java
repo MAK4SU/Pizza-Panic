@@ -1,4 +1,4 @@
-public class Customer {
+public class DraftCustomer {
     public String customerName;
     public String orderName;
     public boolean hasPepperoni;
