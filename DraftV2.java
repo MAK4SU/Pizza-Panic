@@ -7,6 +7,7 @@ public class DraftV2 {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
         //Hi, Progress report at the bottom - RJ
+        //Rename DraftCustomer into Customer for testing, has to be in the same folder.
         do {
             System.out.println("\n====================");
             System.out.println("        Menu        ");
