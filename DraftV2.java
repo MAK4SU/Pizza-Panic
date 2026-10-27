@@ -6,7 +6,7 @@ public class DraftV2 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int choice = 0;
-        //Hi, Progress report at the bottom - R
+        //Hi, Progress report at the bottom - RJ
         do {
             System.out.println("\n====================");
             System.out.println("        Menu        ");
