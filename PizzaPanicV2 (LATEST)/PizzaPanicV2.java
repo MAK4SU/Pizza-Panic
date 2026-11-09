@@ -305,7 +305,7 @@ public class PizzaPanicV2 {
                             dayStars = dayStars + stars;
                             pause(1500);
                         }
-                        //End of Day report | Per day (now in PizzaReports.java)
+                        //End of Day report | Per day (now in PizzaTextBlocks.java)
                         PizzaTextBlocks.dayReport(day, dayServed, dayStars, customersToday);
                         pause(4000);
                         //Clears the leftover newline from the last y/n answer
