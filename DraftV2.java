@@ -2,22 +2,75 @@ import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class DraftV2 {
+public class PizzaPanicV2 {
+    //Short delay so text does not appear all at once
+    static void pause(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+    static void spacing(){
+        for (int s = 0; s < 60; s++) {
+            System.out.println();
+        }
+    }
+
+    //Waits for the player to press Enter
+    static void waitForEnter(Scanner sc) {
+        System.out.print("Press Enter to continue...");
+        sc.nextLine();
+    }
+    //Customer's face
+    static void showFace(String customerName){
+        switch(customerName){
+            case "Ato Deli Rose":     CustomerFace.atoFace(); break;
+            case "Pedro Kayatono":    CustomerFace.pedroFace(); break;
+            case "Alice Go go go":    CustomerFace.aliceFace(); break;
+            case "Apollo Miringhoy":  CustomerFace.apolloFace(); break;
+            case "Harry Rocky":       CustomerFace.harryFace(); break;
+            case "Daldy Co":          CustomerFace.daldyFace(); break;
+            case "Sarah Dikaya":      CustomerFace.sarahFace(); break;
+            case "Nanny Bigay":       CustomerFace.nannyFace(); break;
+            case "Baby Binida":       CustomerFace.babyFace(); break;
+            case "Josh Mahika":       CustomerFace.joshFace(); break;
+            case "Walk Walkism":      CustomerFace.walkFace(); break;
+            case "Tony Flower":       CustomerFace.tonyFace(); break;
+            case "Dong Rebuilder":    CustomerFace.gongFace(); break;
+            default: break;
+        }
+    }
+
+    //Connects each customer order to its matching ASCII art in PizzaArt.java
+    static void showPizza(String orderName) {
+        switch (orderName) {
+            case "Mushroom":     PizzaArt.part1(); break;
+            case "Pepperoni":    PizzaArt.part2(); break;
+            case "Pineapple":    PizzaArt.part3(); break;
+            case "Sausage":      PizzaArt.part4(); break;
+            case "Meat Lover":   PizzaArt.part5(); break;
+            case "Hawaiian":     PizzaArt.part6(); break;
+            case "Ham":          PizzaArt.part7(); break;
+            case "Subterranean": PizzaArt.part9(); break;
+            case "Cheese":       PizzaArt.part8(); break;
+            default: break;
+        }
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int choice = 0;
-        //Hi, Progress report at the bottom - RJ
-        //Rename DraftCustomer into Customer for testing, has to be in the same folder.
+        int choice;
         do {
             System.out.println("\n====================");
             System.out.println("        Menu        ");
             System.out.println("====================");
-            System.out.println("1. Start!");
-            System.out.println("2. Rules and Instructions");
-            System.out.println("3. Credits");
-            System.out.println("4. Exit ");
+            System.out.println("[1] Start!");
+            System.out.println("[2] Rules and Instructions");
+            System.out.println("[3] Credits");
+            System.out.println("[4] Exit ");
             System.out.print("Enter your choice: ");
-
+            //Try catch for wrong inputs
             try{
             choice = scanner.nextInt();
             }
@@ -28,489 +81,396 @@ public class DraftV2 {
             //Choices Section
             switch (choice) {
                 case 1:
-                    for (int i = 0; i < 20; i++) {
-                        System.out.println();
-                    }
+                    spacing();
 
-                    System.out.print("\nLoading the game");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    System.out.print("\n       Loading the game");
+
+                    pause(1000);
                     System.out.print(".");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(1000);
                     System.out.print(".");
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(1000); 
+                    
                     System.out.println(".");
+
+                    pause(1000);
+
                     //Initialization | Gameplay Section
                     Random rand = new Random();
-                    //customerTypes reorganized here into allOrders
                     //Values order: name, order, pepperoni, sausage, pineapple, ham, mushroom
-                    //We should probably give them actual names instead of just "Customer #"
                     Customer[] allOrders = {
-                        new Customer("Customer 1", "Pepperoni", true, false, false, false, false),
-                        new Customer("Customer 2", "Sausage", false, true, false, false, false),
-                        new Customer("Customer 3", "Pineapple", false, false, true, false, false),
-                        new Customer("Customer 4", "Ham", false, false, false, true, false),
-                        new Customer("Customer 5", "Mushroom", false, false, false, false, true),
-                        new Customer("Customer 6", "Hawaiian", false, false, true, true, false),
-                        new Customer("Customer 7", "Meat Lover", true, true, false, true, false),
-                        new Customer("Customer 8", "Subterranean", false, true, false, false, true)
+                        new Customer("", "Pepperoni", true, false, false, false, false),
+                        new Customer("", "Sausage", false, true, false, false, false),
+                        new Customer("", "Pineapple", false, false, true, false, false),
+                        new Customer("", "Ham", false, false, false, true, false),
+                        new Customer("", "Mushroom", false, false, false, false, true),
+                        new Customer("", "Hawaiian", false, false, true, true, false),
+                        new Customer("", "Meat Lover", true, true, false, true, false),
+                        new Customer("", "Subterranean", false, true, false, false, true),
+                        new Customer("", "Cheese", false, false, false, false, false)
                     };
                     String[] ingredients = {"pepperoni", "sausage", "pineapple", "ham", "mushroom"};
                     //Gameplay stuffs
                     int totalStars = 0;
                     int served = 0; 
-                    String playAgain = "y";
+                    int totalCustomers = 0;
+                    //Customer growth settings
+                    int days = 10;           // how many days in one run
+                    int increment = 2;        // customers added each day
+                    int customersToday = 1;   // customers on day 1
+                    int maxPerDay = 10;       // the group never gets bigger than this
+                            pause(1000);
                     //TitleCard
+                    
+                    for (int sp = 0;sp < 60; sp++) {
+                        System.out.println();
+                    }
+
                     System.out.println("===================");
                     System.out.println("    Pizza Panic    ");
                     System.out.println("===================");
-                    do{
-                        //Hardset a few things for initial gameplay run
-                        String answer = "";
-                        boolean valid = false;
-                        //Random for customerType index, there's 8 types
-                        int customerType = rand.nextInt(8);
-                        Customer selected = allOrders[customerType];
-                        // wanted[i] is true if customer wants ingredients[i], 
-                        // copied from a selected customer's stored booleans, same order as ingredients
-                        boolean[] wanted = new boolean[5];
-                        wanted[0] = selected.hasPepperoni;
-                        wanted[1] = selected.hasSausage;
-                        wanted[2] = selected.hasPineapple;
-                        wanted[3] = selected.hasHam;
-                        wanted[4] = selected.hasMushroom;  
-                        //Dialogue goes here, Sample first, 
-                        System.out.println("======================================");
-                        System.out.println(selected.customerName + " would like: " + selected.orderName + " pizza.");
-                        System.out.println("======================================");
-
-                        //Make the Pizza | y/n per ingredient
-                        boolean[] orderMade = new boolean[5];
-                        for (int i = 0; i < ingredients.length; i++){
-                            valid = false;
-
-                            while(!valid){
-                                System.out.print("Add " + ingredients[i] + "? (y/n): ");
-                                answer = scanner.next().toUpperCase();
-                                //if-else logic
-                                if(answer.equals("Y")){
-                                    orderMade[i] = true;
-                                    valid = true;
-                                }
-                                else if(answer.equals("N")){
-                                    valid = true;
-                                }
-                                else{
-                                    System.out.println("Please enter y or n");
-                                }
-                            }
+                    pause(5000);
+                    for (int day = 1; day <= days; day++){
+                        //Customer spawn cap
+                        if (customersToday > maxPerDay) {
+                            customersToday = maxPerDay;
                         }
-                        //Check orderMade with selected customer's order
+                        
+                            pause(1000);
                         System.out.println();
-                        //You can add delays for the dots, this just does it instantly
-                        //Recipe Check | Basically makes the list for printing later
-                        System.out.println("Checking recipe...");
-                        String correctList = "";
-                        String missingList = "";
-                        String wrongList = "";
-                        int mistakes = 0;
-                        for(int i = 0; i < ingredients.length; i++){
-                            if(orderMade[i] != wanted[i]){
-                                mistakes++;
-                                //Wanted but missing
-                                if(wanted[i]){
-                                    if(missingList.equals("")){
-                                        missingList = ingredients[i];
+                        System.out.println("========================================");
+                        System.out.println("DAY " + day + "  |  Customers today: " + customersToday);
+                        System.out.println("========================================");
+                        Customer.rushBanner(customersToday, maxPerDay);
+                        pause(1000);
+                        int dayStars = 0;
+                        int dayServed = 0; 
+                        for (int c = 1; c <= customersToday; c++){
+                            totalCustomers++;
+                            //Hardset a few things for initial gameplay run
+                            String answer = "";
+                            boolean valid = false;
+                            //Random for customerType index, there's 9 types (picks from the whole allOrders list)
+                            int customerType = rand.nextInt(allOrders.length);
+                            Customer selected = allOrders[customerType];
+                            selected.customerName = Customer.matchedName(rand);
+                            // wanted[i] is true if customer wants ingredients[i], 
+                            // copied from a selected customer's stored booleans, same order as ingredients
+                            boolean[] wanted = new boolean[5];
+                            wanted[0] = selected.hasPepperoni;
+                            wanted[1] = selected.hasSausage;
+                            wanted[2] = selected.hasPineapple;
+                            wanted[3] = selected.hasHam;
+                            wanted[4] = selected.hasMushroom;  
+
+                            pause(2000);
+                            for (int s = 0;s < 60; s++) {
+                                System.out.println();
+                            }
+                            showFace(selected.customerName);
+                            System.out.println("=======================================================================");
+                            System.out.println(selected.customerName + " I would like a " + selected.orderName + " pizza, please.");
+                            System.out.println("=======================================================================");
+                            //Shows the ASCII art of the pizza the customer ordered (from PizzaArt.java)
+                            pause(7000);
+                            showPizza(selected.orderName);
+                            pause(3000);
+                            //Timer | Start of the "Panic" of Pizza Panic
+                            int timeLimit = Customer.getLimit(customersToday, maxPerDay);
+                            long startTime = Customer.start(timeLimit);
+                            boolean timedOut = false;
+                            //Make the Pizzeria | Put the Ingredients in
+                            boolean[] orderMade = new boolean[5];
+                            for (int i = 0; i < ingredients.length; i++){
+                                valid = false;
+                                //
+                                while(!valid){
+                                    System.out.print("Add " + ingredients[i] + "? (y/n): ");
+                                    answer = scanner.next().toUpperCase();
+
+                                    System.out.println();
+                                    //if-else logic
+                                    if(answer.equals("Y")){
+                                        orderMade[i] = true;
+                                        valid = true;
+                                    }
+                                    else if(answer.equals("N")){
+                                        valid = true;
                                     }
                                     else{
-                                        missingList = missingList + ", " + ingredients[i];
+                                        System.out.println("Please enter y or n");
                                     }
                                 }
-                                //Added but not wanted
+                                //Timer | Checks after each y/n answer, unanswered stays false
+                                if (Customer.isUp(startTime, timeLimit)) {
+                                    timedOut = true;
+                                    break;
+                                }
+                            }
+                            //Check orderMade with customerType's order
+
+                    for (int sp = 0;sp < 60; sp++) {
+                        System.out.println();
+                    }
+                            //Recipe Check | List check
+                            System.out.print("Checking recipe");
+                                pause(800);
+                            System.out.print(".");
+                                pause(800);
+                            System.out.print(".");
+                                pause(800);
+                            System.out.println(".");
+                                pause(800);
+                            String correctList = "";
+                                pause(800);
+                            String missingList = "";
+                                pause(800);
+                            String wrongList = "";
+                            int mistakes = 0;
+                            for(int i = 0; i < ingredients.length; i++){
+                                if(orderMade[i] != wanted[i]){
+                                    mistakes++;
+                                    //Wanted but missing
+                                    if(wanted[i]){
+                                        if(missingList.equals("")){
+                                            missingList = ingredients[i];
+                                        }
+                                        else{
+                                            missingList = missingList + ", " + ingredients[i];
+                                        }
+                                    }
+                                    //Added but not wanted
+                                    else{
+                                        if(wrongList.equals("")){
+                                            wrongList = ingredients[i];
+                                        }
+                                        else{
+                                            wrongList = wrongList + ", " + ingredients[i];
+                                        }
+                                    }
+                                }
+                                //Matching wants with what's there
                                 else{
-                                    if(wrongList.equals("")){
-                                        wrongList = ingredients[i];
-                                    }
-                                    else{
-                                        wrongList = wrongList + ", " + ingredients[i];
+                                    if(wanted[i]){
+                                        if(correctList.equals("")){
+                                            correctList = ingredients[i];
+                                        }
+                                        else{
+                                            correctList = correctList + ", " + ingredients[i];
+                                        }
                                     }
                                 }
                             }
-                            //Matching wants with what's there
+                            
+                            int stars = 0;
+
+                            if (!timedOut){
+                                served++;
+                                dayServed++;
+                                //Makes the list for Correct, Missing, and Wrong ingredients
+                                if(!correctList.equals("")){
+                                    pause(800);
+                                    System.out.println("You got: " + correctList + " right.");
+                                    pause(800);
+                                }
+                                if(!missingList.equals("")){
+                                    System.out.println("You were missing: " + missingList);
+                                    pause(800);
+                                }
+                                if(!wrongList.equals("")){
+                                    System.out.println("You got: " + wrongList + " wrong.");
+                                    pause(800);
+                                }
+                                //End of the Day Report | Logic
+                                if (mistakes == 0){
+                                    stars = 5;
+                                    System.out.println("Perfect " + selected.orderName + " pizza!");
+                                } 
+                                else if(mistakes == 1){
+                                    stars = 3;
+                                }
+                                else{
+                                    stars = 1;
+                                }
+                            }
                             else{
-                                if(wanted[i]){
-                                    if(correctList.equals("")){
-                                        correctList = ingredients[i];
-                                    }
-                                    else{
-                                        correctList = correctList + ", " + ingredients[i];
-                                    }
-                                }
+                                //Customer leaves, 0 Stars in Report
+                                Customer.timeoutMessage(selected.customerName);
+                                stars = 0;
+                            }
+                                pause(1000);
+                            //Customer Rating | Calculations
+                            for(int i = 0; i < stars; i++){
+                                System.out.print("[*]");
+                            }
+                            System.out.println(" (" + stars + " / 5 Stars)");
+                            totalStars = totalStars + stars;
+                            dayStars = dayStars + stars;
+                            pause(1500);
+                        }
+                        //End of Day report | Per day (now in PizzaReports.java)
+                        PizzaTextBlocks.dayReport(day, dayServed, dayStars, customersToday);
+                        pause(4000);
+                        //Clears the leftover newline from the last y/n answer
+                        scanner.nextLine(); 
+                        waitForEnter(scanner);
+
+                    for (int sp = 0;sp < 60; sp++) {
+                        System.out.println();
+                    }
+                    //Quota Per Day
+                    int servedQuota;
+                    if(customersToday == 1){servedQuota = 1;}
+                    else if(customersToday == 3){servedQuota = 2;}
+                    else if(customersToday == 5){servedQuota = 3;}
+                    else{servedQuota = 5;}
+
+                    if (dayServed < servedQuota) {
+                        System.out.println("================================================================");
+                        System.out.println("                           GAME OVER!                           ");
+                        System.out.println("You served " + dayServed + " of the " + servedQuota + " customers needed today.");
+                        System.out.println("================================================================");
+                        pause(3000);
+                        //No more days
+                        break;                  
+                    }
+                    if (day == days) {
+                        //No "next day prompt" for last day
+                        break;
+                    }
+                        //Next day group increase until it caps out
+                        if (customersToday < maxPerDay) {
+                            customersToday = customersToday + increment;
+                        }
+                        String proceed = "";
+                        boolean proceedValid = false;
+                        while(!proceedValid){
+                        //Continue or Exit before next day
+                            System.out.println("==================================");
+                            System.out.println("Proceed to Next Day?");
+                            System.out.println("Y: Proceed ");
+                            System.out.println("N: Exit ");
+                            System.out.println("==================================");
+                            proceed = scanner.nextLine().toUpperCase();
+                            if(proceed.equals("Y")){
+                                proceedValid = true;
+                            }
+                            else if(proceed.equals("N")){
+                                proceedValid = true;
+                            }
+                            else{
+                                System.out.println("Please enter y/n.");
+                                System.out.println();
                             }
                         }
-                        /*This prints everything in one line instead of:
-                        Correct: Ham
-                        Correct: Pineapple
-                        Wrong: Sausage
-                        etc*/
-                        if(!correctList.equals("")){
-                            System.out.println("You got: " + correctList + " right.");
-                        }
-                        if(!missingList.equals("")){
-                            System.out.println("[WARNING] Missing ingredient: " + missingList + "!");
-                        }
-                        if(!wrongList.equals("")){
-                            System.out.println("You added the wrong ingredients: " + wrongList);
-                        }
-                        //Customer Rating | Star Calculations
-                        int stars = 0;
-                        if (mistakes == 0){
-                            stars = 5;
-                            System.out.println("[SUCCESS] Perfect " + selected.orderName + " pizza!");
-                        } 
-                        else if(mistakes == 1){
-                            stars = 3;
-                        }
-                        else{
-                            stars = 1;
-                        }
-
-                        //Customer Rating | Display
-                        for(int i = 0; i < stars; i++){
-                            System.out.print("[*]");
-                        }
-                        System.out.println(" (" + stars + " / 5 Stars)");
-                        totalStars = totalStars + stars;
-                        served = served + 1;
-
-                        //Play again prompt
-                        valid = false;
-                        while(!valid){
-                        System.out.println("Play again? (y/n): ");
-                        playAgain = scanner.next().toUpperCase();
-                        if(playAgain.equals("Y") || playAgain.equals("N")){
-                            valid = true;
-                        }
-                        else{
-                            System.out.println("Please enter y or n: ");
-                        }
-                        }
-                    } while(!playAgain.equals("N"));
-
-                    //End of the Day Report, idk if I got the titles right
-                    double avg = (double) totalStars/served;
-                    String rank = "";
-                    if(avg >= 4.5){
-                        rank = "Master Chef";
+                        if(proceed.equals("N")){break;}
                     }
-                    else if(avg >= 3.0){
-                        rank = "Line Cook";
+                    //Average and rank (rank now comes from PizzaTextBlocks.java)
+                    double avg = 0.0;
+                    if(totalCustomers > 0){
+                    avg = (double) totalStars/totalCustomers;
                     }
-                    else{
-                        rank = "Trainee";
-                    }
+                    String rank = PizzaTextBlocks.getRank(avg);
 
-                    System.out.println();
-                    System.out.println("===================================================================");
-                    System.out.println("                        END OF DAY REPORT");
-                    System.out.println("===================================================================");
-                    System.out.println("Total Customers Served: " + served);
-                    System.out.println("Total Stars Earned: " + totalStars + " / " + (served * 5));
-                    System.out.printf("Average Rating: %.1f / 5.0%n", avg);
-                    System.out.println("Final Rank: " + rank);
-                    System.out.println("===================================================================");
+                    for (int sp = 0;sp < 60; sp++) {
+                        System.out.println();
+                    }
+                    
+                    //Final report (now in PizzaTextBlocks.java)
+                    PizzaTextBlocks.finalReport(served, totalStars, totalCustomers, avg, rank);
+                    waitForEnter(scanner);
                     break;
-                    //Maybe add a short delay before the break so you can read the end report before seeing the menu again.
-
 
                 case 2:
-                    System.out.println("===================================================================");
-                    System.out.println("                    PIZZA PANIC - PLAYER GUIDE                     ");
-                    System.out.println("===================================================================");
-                    System.out.println("");
-                    System.out.println("WELCOME TO PIZZA PANIC!");
-                    System.out.println("Customers are hungry, orders are coming in fast, and it is up to ");
-                    System.out.println("you to assemble every pizza correctly before your shift ends.");
-                    System.out.println("");
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("                           HOW TO PLAY");
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("[1] RECEIVE THE ORDER:");
-                    System.out.println("    A customer will arrive and ask for a specific pizza type ");
-                    System.out.println("    (e.g., Hawaiian, Meat Lovers, or Sausage Mushroom).");
-                    System.out.println("");
-                    System.out.println("[2] ADD THE INGREDIENTS:");
-                    System.out.println("    The game asks you about each ingredient, for example:");
-                    System.out.println("    Add ham? (y/n): ");
-                    System.out.println("    Type y to add it, or n to leave it off.");
-                    System.out.println("");
-                    System.out.println("[3] AVAILABLE INGREDIENTS LIST:");
-                    System.out.println("    - pepperoni");
-                    System.out.println("    - sausage");
-                    System.out.println("    - ham");
-                    System.out.println("    - pineapple");
-                    System.out.println("    - mushroom");
-                    System.out.println("");
-
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("                        PIZZA MENU & RECIPES");
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("+-------------------+---------------------------------------------+");
-                    System.out.println("| PIZZA NAME        | REQUIRED INGREDIENTS                        |");
-                    System.out.println("+-------------------+---------------------------------------------+");
-                    System.out.println("| Meat Lovers       | pepperoni, sausage, ham                     |");
-                    System.out.println("| Hawaiian          | ham, pineapple                              |");
-                    System.out.println("| Sausage Mushroom  | sausage, mushroom                           |");
-                    System.out.println("+-------------------+---------------------------------------------+");
-                    System.out.println("");
-                    System.out.println("Note: Leaving out an ingredient or adding an incorrect ingredient ");
-                    System.out.println("will lower your score for that order.");
-                    System.out.println("");
-
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("                           SCORING SYSTEM");
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("After submitting your ingredients, the customer will rate your ");
-                    System.out.println("pizza out of 5 stars:");
-                    System.out.println("");
-                    System.out.println("- [5 / 5 Stars] PERFECT! All correct ingredients included.");
-                    System.out.println("- [3 / 5 Stars] PARTIAL! Missing an ingredient or added wrong one.");
-                    System.out.println("- [1 / 5 Star ] INCORRECT! Wrong recipe entirely.");
-                    System.out.println("");
-
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("                        END OF DAY SUMMARY");
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("At the end of your shift (after serving all customers for the day):");
-                    System.out.println("- The game will calculate your Total Stars and Average Rating.");
-                    System.out.println("- Performance Ranks:");
-                    System.out.println("    * 4.5 - 5.0 Stars: Master Chef");
-                    System.out.println("    * 3.0 - 4.4 Stars: Line Cook");
-                    System.out.println("    * Below 3.0 Stars: Trainee");
-                    System.out.println("");
-                    
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-
-                    System.out.println("===================================================================");
-                    System.out.println("                         EXAMPLE GAMEPLAY");
-                    System.out.println("===================================================================");
-                    System.out.println("");
-                    System.out.println("Customer #1: \"Hi! I would like a Hawaiian pizza, please!\"");
-                    System.out.println("");
-                    System.out.println("Add pepperoni? (y/n): n");
-                    System.out.println("Add sausage? (y/n): n");
-                    System.out.println("Add pineapple? (y/n): y");
-                    System.out.println("Add ham? (y/n): y");
-                    System.out.println("Add mushroom? (y/n): n");
-                    System.out.println("");
-                    System.out.println("Checking recipe...");
-                    System.out.println("[SUCCESS] Perfect Hawaiian pizza!");
-                    System.out.println("Customer Rating: [*][*][*][*][*] (5/5 Stars)");
-                    System.out.println("");
-
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-
-                    System.out.println("-------------------------------------------------------------------");
-                    System.out.println("");
-                    System.out.println("Customer #2: \"Give me a Meat Lovers!\"");
-                    System.out.println("");
-                    System.out.println("Add pepperoni? (y/n): y");
-                    System.out.println("Add sausage? (y/n): y");
-                    System.out.println("Add pineapple? (y/n): n");
-                    System.out.println("Add ham? (y/n): y");
-                    System.out.println("Add mushroom? (y/n): n");
-                    System.out.println("");
-                    System.out.println("Checking recipe...");
-                    System.out.println("[WARNING] Missing ingredient: ham!");
-                    System.out.println("Customer Rating: *** (3/5 Stars)");
-                    System.out.println("");
-
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-
-                    System.out.println("===================================================================");
-                    System.out.println("                        END OF DAY REPORT");
-                    System.out.println("===================================================================");
-                    System.out.println("Total Customers Served: 2");
-                    System.out.println("Total Stars Earned: 8 / 10");
-                    System.out.println("Average Rating: 4.0 / 5.0 Stars");
-                    System.out.println("Final Rank: Line Cook");
-                    System.out.println("===================================================================");
+                    PizzaTextBlocks.playerGuide();
+                    pause(5000);
+                    PizzaTextBlocks.howToPlay();
+                    //Clears the leftover newline from the menu choice
+                    scanner.nextLine(); 
+                    waitForEnter(scanner);
+                    PizzaTextBlocks.pizzaMenuAndRecipes();
+                    waitForEnter(scanner);
+                    PizzaTextBlocks.scoringSystem();
+                    waitForEnter(scanner);
+                    PizzaTextBlocks.guideFinalReport();
+                    waitForEnter(scanner);
+                    PizzaTextBlocks.guideGameplay1();
+                    waitForEnter(scanner);
+                    PizzaTextBlocks.guideGameplay2();
+                    waitForEnter(scanner);
+                    PizzaTextBlocks.guideEndDayReport();
                     break;
 
-
-
-                case 3:
+                case 3: //Stays for Credits
+                    
+                    for (int sp = 0;sp < 60; sp++) {
+                        System.out.println();
+                    }
+                    
                     System.out.println("===================================================================");
                     System.out.println("                      PIZZA PANIC - CREDITS                         ");
                     System.out.println("===================================================================");
 
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(5000);
 
                     System.out.println("-------------------------------------------------------------------");
                     System.out.println("");
                     System.out.println("                  DEVELOPMENT & PRODUCTION TEAM                    ");
                     System.out.println("");
                     System.out.println("-------------------------------------------------------------------");
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(3000);
 
                     System.out.println("  MAIN PROGRAM LOGIC & SYSTEM ARCHITECTURE");
 
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(2000);
 
                     System.out.println("  - Marcus Jamir G. Rufin");
 
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(3000);
 
                     System.out.println("");
                     System.out.println("  ORDER VALIDATION & QUALITY ASSURANCE");
 
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(2000);
 
                     System.out.println("  - Reiben John Calumag");
 
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(3000);
 
                     System.out.println("");
                     System.out.println("  CUSTOMER DIALOG & REQUEST ENCODER");
 
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(2000);
 
-                    System.out.println(" - Hillary Joy De Jesus");
+                    System.out.println("  - Hillary Joy De Jesus");
                     
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(3000);
 
                     System.out.println("");
                     System.out.println("  PIZZA RECIPE & MENU DESIGN");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(2000);
 
                     System.out.println("  - Dion Michael Literato");
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
+                    pause(3000);
 
                     System.out.println("-------------------------------------------------------------------");
                     System.out.println("                Thank you for playing Pizza Panic!");
                     System.out.println("===================================================================");
+                    pause(7000);
+                    for (int sp = 0;sp < 60; sp++) {
+                        System.out.println();
+                    }
                     break;
-
-
 
                 case 4:
-                    System.out.println("Exiting the menu.");
+                    PizzaLogicExtra.exitConfirmation(scanner);
                     break;
-
-
 
                 default:
                     System.out.println("Invalid choice. Please try again.");
                     break;
             }
         } while (choice != 4);
-
-
-
         scanner.close();
     }
 }
-/*
-Progress Report October 27:
-Added: 
-Merged the customerList into Gameplay, 
-Put Gameplay into case 1 for Main
-Made it so the corrects/mistakes actually print in one line and not in multiple.
-Try-catch for the switch case scanner input since if you type a letter on the menu, it crashes.
-
-Fixes:
-Fixed the while part at the end so it continues running unless you Exit
-Adjusted the Draft Customer variables to match with DraftGameV1's
-
-Additional:
-For the sake of organization, SOme labels exist so you can Ctrl + F to search for sections of the code.
-Once we're finalizing stuff na, I'll fix the comments/remove these sections of yapping
-Next task: Yung random(?) number of customers per gameplay loop instead na singles lang.
-The implementations of models too.
-*/
