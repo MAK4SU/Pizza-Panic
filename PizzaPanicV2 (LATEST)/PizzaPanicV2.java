@@ -11,6 +11,11 @@ public class PizzaPanicV2 {
             Thread.currentThread().interrupt();
         }
     }
+    static void spacing(){
+        for (int sp = 0;sp < 60; sp++) {
+            System.out.println();
+        }
+    }
 
     //Waits for the player to press Enter
     static void waitForEnter(Scanner sc) {
@@ -32,7 +37,7 @@ public class PizzaPanicV2 {
             case "Josh Mahika":       CustomerFace.joshFace(); break;
             case "Walk Walkism":      CustomerFace.walkFace(); break;
             case "Tony Flower":       CustomerFace.tonyFace(); break;
-            case "Gong Rebuilder":    CustomerFace.gongFace(); break;
+            case "Dong Rebuilder":    CustomerFace.gongFace(); break;
             default: break;
         }
     }
@@ -76,9 +81,7 @@ public class PizzaPanicV2 {
             //Choices Section
             switch (choice) {
                 case 1:
-                    for (int s = 0; s < 60; s++) {
-                        System.out.println();
-                    }
+                    spacing();
 
                     System.out.print("\n       Loading the game");
 
@@ -119,9 +122,7 @@ public class PizzaPanicV2 {
                             pause(1000);
                     //TitleCard
                     
-                    for (int sp = 0;sp < 60; sp++) {
-                        System.out.println();
-                    }
+                    spacing();
 
                     System.out.println("===================");
                     System.out.println("    Pizza Panic    ");
@@ -161,9 +162,7 @@ public class PizzaPanicV2 {
                             wanted[4] = selected.hasMushroom;  
 
                             pause(2000);
-                            for (int s = 0;s < 60; s++) {
-                                System.out.println();
-                            }
+                            spacing();
                             showFace(selected.customerName);
                             System.out.println("=======================================================================");
                             System.out.println(selected.customerName + " I would like a " + selected.orderName + " pizza, please.");
@@ -206,9 +205,7 @@ public class PizzaPanicV2 {
                             }
                             //Check orderMade with customerType's order
 
-                    for (int sp = 0;sp < 60; sp++) {
-                        System.out.println();
-                    }
+                    spacing();
                             //Recipe Check | List check
                             System.out.print("Checking recipe");
                                 pause(800);
@@ -305,16 +302,14 @@ public class PizzaPanicV2 {
                             dayStars = dayStars + stars;
                             pause(1500);
                         }
-                        //End of Day report | Per day (now in PizzaTextBlocks.java)
+                        //End of Day report | Per day (now in PizzaReports.java)
                         PizzaTextBlocks.dayReport(day, dayServed, dayStars, customersToday);
                         pause(4000);
                         //Clears the leftover newline from the last y/n answer
                         scanner.nextLine(); 
                         waitForEnter(scanner);
 
-                    for (int sp = 0;sp < 60; sp++) {
-                        System.out.println();
-                    }
+                    spacing();
                     //Quota Per Day
                     int servedQuota;
                     if(customersToday == 1){servedQuota = 1;}
@@ -369,9 +364,7 @@ public class PizzaPanicV2 {
                     }
                     String rank = PizzaTextBlocks.getRank(avg);
 
-                    for (int sp = 0;sp < 60; sp++) {
-                        System.out.println();
-                    }
+                    spacing();
                     
                     //Final report (now in PizzaTextBlocks.java)
                     PizzaTextBlocks.finalReport(served, totalStars, totalCustomers, avg, rank);
@@ -400,9 +393,7 @@ public class PizzaPanicV2 {
 
                 case 3: //Stays for Credits
                     
-                    for (int sp = 0;sp < 60; sp++) {
-                        System.out.println();
-                    }
+                    spacing();
                     
                     System.out.println("===================================================================");
                     System.out.println("                      PIZZA PANIC - CREDITS                         ");
@@ -454,13 +445,11 @@ public class PizzaPanicV2 {
                     System.out.println("                Thank you for playing Pizza Panic!");
                     System.out.println("===================================================================");
                     pause(7000);
-                    for (int sp = 0;sp < 60; sp++) {
-                        System.out.println();
-                    }
+                    spacing();
                     break;
 
                 case 4:
-                    choice = PizzaLogicExtra.exitConfirmation(scanner);
+                    PizzaLogicExtra.exitConfirmation(scanner);
                     break;
 
                 default:
