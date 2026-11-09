@@ -32,7 +32,7 @@ public class PizzaPanicV2 {
             case "Josh Mahika":       CustomerFace.joshFace(); break;
             case "Walk Walkism":      CustomerFace.walkFace(); break;
             case "Tony Flower":       CustomerFace.tonyFace(); break;
-            case "Dong Rebuilder":    CustomerFace.gongFace(); break;
+            case "Gong Rebuilder":    CustomerFace.gongFace(); break;
             default: break;
         }
     }
