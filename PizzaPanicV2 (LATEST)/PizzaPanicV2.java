@@ -460,7 +460,7 @@ public class PizzaPanicV2 {
                     break;
 
                 case 4:
-                    PizzaLogicExtra.exitConfirmation(scanner);
+                    choice = PizzaLogicExtra.exitConfirmation(scanner);
                     break;
 
                 default:
