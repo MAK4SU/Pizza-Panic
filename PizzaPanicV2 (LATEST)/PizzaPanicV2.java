@@ -449,7 +449,13 @@ public class PizzaPanicV2 {
                     break;
 
                 case 4:
-                    PizzaLogicExtra.exitConfirmation(scanner);
+                    System.out.print("Exiting the game");
+                    pause(700);
+                    System.out.print(".");
+                    pause(700);
+                    System.out.print(".");
+                    pause(700);
+                    System.out.print(".");
                     break;
 
                 default:
