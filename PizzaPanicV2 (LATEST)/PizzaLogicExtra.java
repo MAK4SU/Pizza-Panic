@@ -22,7 +22,8 @@ public class PizzaLogicExtra {
             System.out.println("[2] No, Return to game");
             try {
                 int confirm = scanner.nextInt();
-                if(confirm == 1){
+                switch(confirm){
+                case 1:
                     System.out.print("Exiting the game");
                     pause(700);
                     System.out.print(".");
@@ -32,18 +33,19 @@ public class PizzaLogicExtra {
                     System.out.print(".");
                     result = 4;
                     answered = true;
-                }
-                else if(confirm == 2){
+                
+                case 2:
                     for (int s = 0;s < 60; s++) {
                         System.out.println();
                     }
                     result = 0;
                     answered = true;
-                }
-                else{
+                
+                default:
                     System.out.println("Please enter 1 or 2.");
-                }
-            } catch(InputMismatchException e) {
+            }
+            }
+             catch(InputMismatchException e) {
                 scanner.next(); // Clear the invalid input
                 System.out.println("Please enter a valid number.");
             }
