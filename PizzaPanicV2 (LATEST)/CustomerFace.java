@@ -446,7 +446,7 @@ public class CustomerFace {
             System.out.println("                    @%%#..    .   . ===@%@*@@@%%*.=+=...++%@%#@*#   .  .  .  -+:");
             System.out.println("");
         }
-public static void main(String[] args) {
+/*public static void main(String[] args) {
         // Main method implementation
 System.out.println("                    ");
 System.out.println("                                            .: +.   ... -#         -.. .        ");
@@ -531,5 +531,5 @@ System.out.println("");
 
 
 
-    }
+    }*/
 }
